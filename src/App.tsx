@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Main } from "./App.css";
+import Box from "./components/Box";
+import Button from "./components/Button";
+import Fieldset from "./components/Fieldset";
+import Input from "./components/Input";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Main>
+      <form onSubmit={() => {}}>
+        <Fieldset title="Customer Information">
+          <Box mt={2}>
+            <label>Full name</label>
+            <Input placeholder="Enter your name" />
+          </Box>
+          <Box mt={3}>
+            <label>Street name</label>
+            <Input placeholder="Enter your street name" />
+          </Box>
+          <Box mt={3}>
+            <label>House number</label>
+            <Input placeholder="Enter your house number" />
+          </Box>
+          <Box mt={3}>
+            <label>Postal code</label>
+            <Input placeholder="Enter your postal code" />
+          </Box>
+          <Box mt={3}>
+            <label>City</label>
+            <Input placeholder="Enter your city" />
+          </Box>
+          <Box mt={3}>
+            <label>Phone number</label>
+            <Input placeholder="Enter your phone number" />
+          </Box>
+        </Fieldset>
+      </form>
+    </Main>
   );
 }
 
