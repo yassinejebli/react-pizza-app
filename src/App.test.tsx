@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import { Toppings } from "./types";
 
 describe("Form", () => {
   it("should contain all the fields & button for ordering a pizza", () => {
@@ -7,7 +8,10 @@ describe("Form", () => {
     // check if all fields exist in the form
     // pizza selection
     expect(screen.getByLabelText("Pizza size")).toBeInTheDocument();
-    expect(screen.getByLabelText("Toppings")).toBeInTheDocument();
+    expect(screen.getByLabelText(Toppings.olives)).toBeInTheDocument();
+    expect(screen.getByLabelText(Toppings.mushrooms)).toBeInTheDocument();
+    expect(screen.getByLabelText(Toppings.pepper)).toBeInTheDocument();
+    expect(screen.getByLabelText(Toppings.pepperoni)).toBeInTheDocument();
     // customer information
     expect(screen.getByLabelText("Full name")).toBeInTheDocument();
     expect(screen.getByLabelText("Street name")).toBeInTheDocument();

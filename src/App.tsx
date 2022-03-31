@@ -20,12 +20,14 @@ function App() {
               ))}
             </Select>
           </Field>
-          <Field mt={3} label="Toppings" required htmlFor="toppings">
+          <Field mt={3} label="Toppings">
             {toppingData.map((topping) => (
               <>
-                {topping.name}
+                <label htmlFor={`topping-${topping.name}`}>
+                  {topping.name}
+                </label>
                 <input
-                  id="toppings"
+                  id={`topping-${topping.name}`}
                   type="checkbox"
                   key={topping.name}
                   value={topping.name}
