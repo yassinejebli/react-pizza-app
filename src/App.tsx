@@ -34,6 +34,12 @@ function App() {
             <Input placeholder="Enter your phone number" />
           </Box>
         </Fieldset>
+        <Fieldset mt={3} title="Pizza Selection">
+          <Box mt={2}>
+            <label>Full name</label>
+            <Input placeholder="Enter your name" />
+          </Box>
+        </Fieldset>
       </form>
     </Main>
   );
