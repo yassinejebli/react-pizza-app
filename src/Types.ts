@@ -21,13 +21,18 @@ export type ToppingType = {
   price: number;
 };
 
-export type OrderModel = {
-  name: string;
+export type OrderType = {
+  fullName: string;
   streetName: string;
   houseNumber: string;
   postalCode: string;
   city: string;
   phoneNumber: string;
+
   pizzaSize: PizzaSizeType;
   toppings: Array<ToppingType>;
+
+  cardNumber: string;
+  expirationDate: string;
+  cvc: string;
 };
