@@ -7,6 +7,7 @@ type FieldProps = {
   htmlFor?: string;
   required?: boolean;
   children: React.ReactNode;
+  error?: string;
 } & SpaceProps;
 
 export default function Field({
@@ -14,19 +15,23 @@ export default function Field({
   required,
   htmlFor,
   children,
+  error,
   ...props
 }: FieldProps) {
   return (
     <Wrapper {...props}>
       <label htmlFor={htmlFor}>{label}</label>
-      {required && <RequiredIndicator>*</RequiredIndicator>}
+      {required && <Red>*</Red>}
       <Box mt={1}>{children}</Box>
+      {error && <Red>{error}</Red>}
     </Wrapper>
   );
 }
 
-const RequiredIndicator = styled.span`
+const Red = styled.span`
   color: red;
+  font-size: 14px;
+  margin-left: 4px;
 `;
 
 const Wrapper = styled.div`

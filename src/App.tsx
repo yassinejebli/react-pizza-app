@@ -18,7 +18,7 @@ function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<OrderType>({
     defaultValues: {
       pizzaSize: PizzaSizes.small,
@@ -26,8 +26,9 @@ function App() {
     },
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: OrderType) => {
-    console.log({ data, errors, isValid });
+  const onSubmit = (data: OrderType, test: any) => {
+    console.log({ test });
+    console.log({ data, errors });
   };
 
   return (
@@ -38,7 +39,12 @@ function App() {
         this way we can make maintainability and testing better and easier for the forms  */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Fieldset py={3} title="Pizza Selection">
-            <Field label="Pizza size" required htmlFor="pizza_size">
+            <Field
+              error={errors.pizzaSize?.message}
+              label="Pizza size"
+              required
+              htmlFor="pizza_size"
+            >
               <PizzaSizeSelect id="pizza_size" {...register("pizzaSize")} />
             </Field>
             <Field mt={3} label="Toppings">
@@ -56,43 +62,85 @@ function App() {
           </Fieldset>
 
           <Fieldset py={3} mt={3} title="Customer Information">
-            <Field label="Full name" htmlFor="full_name" required>
+            <Field
+              error={errors.fullName?.message}
+              label="Full name"
+              htmlFor="full_name"
+              required
+            >
               <Input
+                error={Boolean(errors.fullName)}
                 id="full_name"
                 {...register("fullName")}
                 placeholder="Enter your full name"
               />
             </Field>
-            <Field mt={3} label="Street name" htmlFor="street_name" required>
+            <Field
+              error={errors.streetName?.message}
+              mt={3}
+              label="Street name"
+              htmlFor="street_name"
+              required
+            >
               <Input
+                error={Boolean(errors.streetName)}
                 id="street_name"
                 {...register("streetName")}
                 placeholder="Enter your street name"
               />
             </Field>
-            <Field mt={3} label="House number" htmlFor="house_number" required>
+            <Field
+              error={errors.houseNumber?.message}
+              mt={3}
+              label="House number"
+              htmlFor="house_number"
+              required
+            >
               <Input
+                error={Boolean(errors.houseNumber)}
                 id="house_number"
                 {...register("houseNumber")}
                 placeholder="Enter your house number"
               />
             </Field>
-            <Field mt={3} label="Postal code" htmlFor="postal_code" required>
+            <Field
+              error={errors.postalCode?.message}
+              mt={3}
+              label="Postal code"
+              htmlFor="postal_code"
+              required
+            >
               <Input
+                error={Boolean(errors.postalCode)}
                 id="postal_code"
                 {...register("postalCode")}
                 placeholder="Enter your postal code"
               />
             </Field>
-            <Field mt={3} label="City" htmlFor="city" required>
+            <Field
+              error={errors.city?.message}
+              mt={3}
+              label="City"
+              htmlFor="city"
+              required
+            >
               <Input
+                error={Boolean(errors.city)}
                 id="city"
                 {...register("city")}
                 placeholder="Enter your city"
               />
             </Field>
-            <Field mt={3} label="Phone number" htmlFor="phone_number" required>
+            <Field
+              error={errors.phoneNumber?.message}
+              mt={3}
+              label="Phone number"
+              htmlFor="phone_number"
+              required
+            >
               <Input
+                type="tel"
+                error={Boolean(errors.phoneNumber)}
                 id="phone_number"
                 {...register("phoneNumber")}
                 placeholder="Enter your phone number"
@@ -101,37 +149,50 @@ function App() {
           </Fieldset>
 
           <Fieldset py={3} mt={3} title="Payment Information">
-            <Field label="Card number" htmlFor="card_number" required>
+            <Field
+              error={errors.cardNumber?.message}
+              label="Card number"
+              htmlFor="card_number"
+              required
+            >
               <Input
+                error={Boolean(errors.cardNumber)}
                 id="card_number"
                 {...register("cardNumber")}
                 placeholder="1234 1234 1234 1234"
               />
             </Field>
             <Field
+              error={errors.expirationDate?.message}
               mt={3}
               label="Expiration date"
               htmlFor="expiration_date"
               required
             >
               <Input
+                error={Boolean(errors.expirationDate)}
                 id="expiration_date"
                 {...register("expirationDate")}
                 placeholder="MM / YY"
               />
             </Field>
-            <Field mt={3} label="CVC" htmlFor="cvc" required>
-              <Input id="cvc" {...register("cvc")} placeholder="CVC" />
+            <Field
+              error={errors.cvc?.message}
+              mt={3}
+              label="CVC"
+              htmlFor="cvc"
+              required
+            >
+              <Input
+                error={Boolean(errors.cvc)}
+                id="cvc"
+                {...register("cvc")}
+                placeholder="CVC"
+              />
             </Field>
           </Fieldset>
 
-          <Button
-            // disabled={!isValid}
-            type="submit"
-            variant="primary"
-            width={160}
-            mt={3}
-          >
+          <Button type="submit" variant="primary" width={160} mt={3}>
             Order
           </Button>
         </form>

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
 import { Toppings } from "./types";
 
@@ -27,8 +27,17 @@ describe("Form", () => {
     expect(screen.getByText("Order")).toBeInTheDocument();
   });
 
-  it("should disable button when the form is not valid", () => {
+  // TODO: do the same for all the inputs
+  it("should show an error message when payment card number is invalid", async () => {
     render(<App />);
-    expect(screen.getByText("Order")).toBeDisabled();
+    const paymentCardInput = screen.getByLabelText("Card number");
+    const orderButton = screen.getByText("Order");
+
+    fireEvent.change(paymentCardInput, { target: { value: "1234 4321" } });
+    fireEvent.click(orderButton);
+
+    expect(
+      await screen.findByText("Card number is invalid")
+    ).toBeInTheDocument();
   });
 });
