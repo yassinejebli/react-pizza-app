@@ -11,12 +11,12 @@ export enum Toppings {
   pepper = "pepper",
 }
 
-type PizzaSizeType = {
+export type PizzaSizeType = {
   name: PizzaSizes;
   price: number;
 };
 
-type ToppingType = {
+export type ToppingType = {
   name: Toppings;
   price: number;
 };

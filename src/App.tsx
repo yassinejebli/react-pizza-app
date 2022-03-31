@@ -3,13 +3,31 @@ import Box from "./components/Box";
 import Button from "./components/Button";
 import Fieldset from "./components/Fieldset";
 import Input from "./components/Input";
+import Select from "./components/Select";
+import { pizzaSizeData } from "./data";
 
 function App() {
   return (
     <Main>
       <form onSubmit={() => {}}>
-        <Fieldset title="Customer Information">
-          <Box mt={2}>
+        <Fieldset py={3} title="Pizza Selection">
+          <Box>
+            <label>Pizza size</label>
+            <Select>
+              {pizzaSizeData.map((pizzaSize) => (
+                <option value={pizzaSize.name}>
+                  {pizzaSize.name} ${pizzaSize.price}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box mt={3}>
+            <label>Toppings</label>
+          </Box>
+        </Fieldset>
+
+        <Fieldset py={3} mt={3} title="Customer Information">
+          <Box>
             <label>Full name</label>
             <Input placeholder="Enter your name" />
           </Box>
@@ -32,12 +50,6 @@ function App() {
           <Box mt={3}>
             <label>Phone number</label>
             <Input placeholder="Enter your phone number" />
-          </Box>
-        </Fieldset>
-        <Fieldset mt={3} title="Pizza Selection">
-          <Box mt={2}>
-            <label>Full name</label>
-            <Input placeholder="Enter your name" />
           </Box>
         </Fieldset>
       </form>
