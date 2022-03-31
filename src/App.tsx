@@ -27,7 +27,7 @@ function App() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data: OrderType) => {
-    console.log(data);
+    console.log({ data, errors, isValid });
   };
 
   return (
@@ -39,7 +39,7 @@ function App() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Fieldset py={3} title="Pizza Selection">
             <Field label="Pizza size" required htmlFor="pizza_size">
-              <PizzaSizeSelect {...register("pizzaSize")} />
+              <PizzaSizeSelect id="pizza_size" {...register("pizzaSize")} />
             </Field>
             <Field mt={3} label="Toppings">
               {toppingData.map((topping) => (
@@ -47,7 +47,8 @@ function App() {
                   key={topping.name}
                   {...register("toppings")}
                   id={`topping-${topping.name}`}
-                  label={`${topping.name} ${formatPrice(topping.price)}`}
+                  label={`${topping.name}`}
+                  helperText={formatPrice(topping.price)}
                   value={topping.name}
                 />
               ))}
@@ -100,7 +101,7 @@ function App() {
           </Fieldset>
 
           <Fieldset py={3} mt={3} title="Payment Information">
-            <Field mt={3} label="Card number" htmlFor="card_number" required>
+            <Field label="Card number" htmlFor="card_number" required>
               <Input
                 id="card_number"
                 {...register("cardNumber")}
@@ -125,7 +126,7 @@ function App() {
           </Fieldset>
 
           <Button
-            disabled={!isValid}
+            // disabled={!isValid}
             type="submit"
             variant="primary"
             width={160}

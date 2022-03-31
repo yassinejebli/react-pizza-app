@@ -8,9 +8,7 @@ const schema = yup
       .mixed<PizzaSizes>()
       .oneOf(Object.values(PizzaSizes))
       .required(),
-    toppings: yup.array(
-      yup.mixed<Toppings>().oneOf(Object.values(Toppings)).nullable()
-    ),
+    toppings: yup.array(yup.mixed<Toppings>().oneOf(Object.values(Toppings))),
     // Customer Information
     fullName: yup.string().required(),
     streetName: yup.string().required(),
