@@ -2,56 +2,54 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Main } from "./App.css";
-import Box from "./components/Box";
 import Button from "./components/Button";
 import Field from "./components/Field";
 import Fieldset from "./components/Fieldset";
 import Header from "./components/Header";
 import Input from "./components/Input";
-import Select from "./components/Select";
-import { pizzaSizeData, toppingData } from "./data";
-import { OrderType } from "./types";
+import { toppingData } from "./data";
+import { OrderType, PizzaSizes } from "./types";
 import schema from "./schema";
+import PizzaSizeSelect from "./components/PizzaSizeSelect";
+import Checkbox from "./components/Checkbox";
+import { formatPrice } from "./helpers";
 
 function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<OrderType>({
+    defaultValues: {
+      pizzaSize: PizzaSizes.small,
+      toppings: [],
+    },
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: OrderType) => console.log(data);
+  const onSubmit = (data: OrderType) => {
+    console.log(data);
+  };
 
-  console.log({ errors });
   return (
     <>
       <Header total={0} />
       <Main>
+        {/* Maybe it's better to split the form into 3 separate files/pages: PizzaSelectionForm, CustomerInformationForm and PaymentForm, 
+        this way we can make maintainability and testing better and easier for the forms  */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Fieldset py={3} title="Pizza Selection">
             <Field label="Pizza size" required htmlFor="pizza_size">
-              <Select id="pizza_size" {...register("pizzaSize")}>
-                {pizzaSizeData.map((pizzaSize) => (
-                  <option key={pizzaSize.name} value={pizzaSize.name}>
-                    {pizzaSize.name} ${pizzaSize.price}
-                  </option>
-                ))}
-              </Select>
+              <PizzaSizeSelect {...register("pizzaSize")} />
             </Field>
             <Field mt={3} label="Toppings">
               {toppingData.map((topping) => (
-                <Box key={topping.name} mt={1} flexDirection="row">
-                  <label htmlFor={`topping-${topping.name}`}>
-                    {topping.name}
-                  </label>
-                  <input
-                    {...register("toppings")}
-                    id={`topping-${topping.name}`}
-                    type="checkbox"
-                    value={topping.name}
-                  />
-                </Box>
+                <Checkbox
+                  key={topping.name}
+                  {...register("toppings")}
+                  id={`topping-${topping.name}`}
+                  label={`${topping.name} ${formatPrice(topping.price)}`}
+                  value={topping.name}
+                />
               ))}
             </Field>
           </Fieldset>
@@ -126,7 +124,13 @@ function App() {
             </Field>
           </Fieldset>
 
-          <Button type="submit" variant="primary" width={160} mt={3}>
+          <Button
+            disabled={!isValid}
+            type="submit"
+            variant="primary"
+            width={160}
+            mt={3}
+          >
             Order
           </Button>
         </form>

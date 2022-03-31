@@ -29,8 +29,8 @@ export type OrderType = {
   city: string;
   phoneNumber: string;
 
-  pizzaSize: PizzaSizeType;
-  toppings: Array<ToppingType>;
+  pizzaSize: PizzaSizes;
+  toppings: Array<Toppings>;
 
   cardNumber: string;
   expirationDate: string;
