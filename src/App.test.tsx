@@ -29,6 +29,6 @@ describe("Form", () => {
 
   it("should disable button when the form is not valid", () => {
     render(<App />);
-    // expect(screen.getByText("Order")).toBeDisabled();
+    expect(screen.getByText("Order")).toBeDisabled();
   });
 });

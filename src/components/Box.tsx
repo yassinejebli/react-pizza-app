@@ -1,9 +1,22 @@
 import styled from "@emotion/styled";
-import { space, background, SpaceProps, BackgroundProps } from "styled-system";
+import {
+  space,
+  background,
+  flexDirection,
+  alignItems,
+  FlexDirectionProps,
+  SpaceProps,
+  BackgroundProps,
+  AlignItemsProps,
+} from "styled-system";
 
-export default styled.div<SpaceProps & BackgroundProps>`
+export default styled.div<
+  FlexDirectionProps & AlignItemsProps & SpaceProps & BackgroundProps
+>`
   display: flex;
   flex-direction: column;
+  ${alignItems}
+  ${flexDirection}
   ${space}
   ${background}
 `;
