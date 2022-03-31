@@ -19,6 +19,8 @@ describe("Form", () => {
     expect(screen.getByLabelText("Card number")).toBeInTheDocument();
     expect(screen.getByLabelText("Expiration date")).toBeInTheDocument();
     expect(screen.getByLabelText("CVC")).toBeInTheDocument();
+    // Order button
+    expect(screen.getByText("Order")).toBeInTheDocument();
   });
 
   it("should disable button when the form is not valid", () => {
