@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -9,33 +10,40 @@ import Header from "./components/Header";
 import Input from "./components/Input";
 import { toppingData } from "./data";
 import { OrderType, PizzaSizes } from "./types";
-import schema from "./schema";
+import validationSchema from "./validationSchema";
 import PizzaSizeSelect from "./components/PizzaSizeSelect";
 import Checkbox from "./components/Checkbox";
-import { formatPrice } from "./helpers";
+import { formatPrice, getPizzaPrice, getToppingsPrice } from "./helpers";
 
 function App() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<OrderType>({
     defaultValues: {
       pizzaSize: PizzaSizes.small,
       toppings: [],
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(validationSchema),
   });
-  const onSubmit = (data: OrderType, test: any) => {
-    console.log({ test });
-    console.log({ data, errors });
+
+  // re-render only when toppings or pizzaSize value change
+  const toppingsPrice = getToppingsPrice(watch("toppings"));
+  const pizzaPrice = getPizzaPrice(watch("pizzaSize"));
+
+  const total = toppingsPrice + pizzaPrice;
+
+  const onSubmit = (data: OrderType) => {
+    console.log({ data });
   };
 
   return (
     <>
-      <Header total={0} />
+      <Header total={total} />
       <Main>
-        {/* Maybe it's better to split the form into 3 separate files/pages: PizzaSelectionForm, CustomerInformationForm and PaymentForm, 
+        {/* Maybe it's better to split the form into 3 separate files/pages (wizard): PizzaSelectionForm, CustomerInformationForm and PaymentForm, 
         this way we can make maintainability and testing better and easier for the forms  */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Fieldset py={3} title="Pizza Selection">
@@ -170,6 +178,7 @@ function App() {
               required
             >
               <Input
+                // TODO: should be a masked input
                 error={Boolean(errors.expirationDate)}
                 id="expiration_date"
                 {...register("expirationDate")}

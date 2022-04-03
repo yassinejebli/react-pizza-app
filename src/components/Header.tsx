@@ -9,7 +9,7 @@ export default function Header({ total }: HeaderProps) {
   return (
     <Wrapper>
       <h2>Pizza</h2>
-      {formatPrice(total)}
+      <div>Total: {formatPrice(total)}</div>
     </Wrapper>
   );
 }
